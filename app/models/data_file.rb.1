@@ -1,0 +1,10 @@
+class DataFile < ActiveRecord::Base 
+  def self.save(upload) 
+    name = upload['datafile'].original_filename 
+    path = "public/data" 
+    pathName = File.join(path, name) 
+    pathNamet = File.join(path, name+"t") 
+    File.open(pathName, "wb") { |f| f.write(upload['datafile'].read) }
+    `convert #{pathName} -resize 20x20 -quality 90 #{pathName}` 
+  end 
+end 

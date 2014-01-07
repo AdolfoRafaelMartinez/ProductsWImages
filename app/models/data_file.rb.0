@@ -1,0 +1,11 @@
+class DataFile < ActiveRecord::Base 
+  def self.save(upload) 
+    directory = "public" 
+    name =  upload['datafile'].original_filename 
+    path = File.join(directory, name) 
+    src_photo = path 
+    dst_photo = src_photo + "/a"
+    File.open(path, "wb") { |f| f.write(upload['datafile'].read) } 
+    # `convert #{src_photo} -resize 20x20 -quality 90 #{dst_photo}` 
+  end 
+end 
